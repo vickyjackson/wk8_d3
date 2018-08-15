@@ -1,28 +1,34 @@
 import db.DBCourse;
 import db.DBHelper;
-import models.Course;
-import models.Lesson;
-import models.Mentor;
-import models.Student;
+import db.DBInstructor;
+import db.DBStudent;
+import models.*;
 
 import java.util.List;
 
 public class Runner {
 
     public static void main(String[] args){
+
+        Instructor instructor1 = new Instructor("Patrick Star");
+        DBHelper.save(instructor1);
+
+        Instructor instructor2 = new Instructor("Squidward");
+        DBHelper.save(instructor2);
+
         Course course1 = new Course("Space", 2);
         DBHelper.save(course1);
 
         Course course2 = new Course("Cartoons", 4);
         DBHelper.save(course2);
 
-        Lesson lesson1 = new Lesson("Planets", 3, course1);
+        Lesson lesson1 = new Lesson("Planets", 3, course1, instructor1);
         DBHelper.save(lesson1);
 
-        Lesson lesson2 = new Lesson("Aliens", 3, course1);
+        Lesson lesson2 = new Lesson("Aliens", 3, course1, instructor1);
         DBHelper.save(lesson2);
 
-        Lesson lesson3 = new Lesson("Spongebob Squarepants", 3, course2);
+        Lesson lesson3 = new Lesson("Spongebob Squarepants", 3, course2, instructor2);
         DBHelper.save(lesson3);
 
         Student student1 = new Student("Pat", 30, 1, course1);
@@ -49,9 +55,12 @@ public class Runner {
         Mentor mentor4 = new Mentor("Emil", student4);
         DBHelper.save(mentor4);
 
+        DBStudent.addStudentToLesson(student1, lesson1);
 
         List<Student> studentsOnCourse = DBCourse.getAllStudentsOnCourse(course1);
 
         List<Lesson> lessonsOnCourse = DBCourse.getAllLessonsOnCourse(course1);
+
+        List<Lesson> lessonsOfInstructor = DBInstructor.getLessonsOfInstructor(instructor1);
     }
 }

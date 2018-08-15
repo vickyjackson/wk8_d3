@@ -106,4 +106,8 @@ public class Student {
     public void setLessons(List<Lesson> lessons) {
         this.lessons = lessons;
     }
+
+    public void addLessonToStudent(Lesson lesson){
+        this.lessons.add(lesson);
+    }
 }

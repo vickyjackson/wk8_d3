@@ -2,6 +2,7 @@ package models;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,17 +13,19 @@ public class Lesson {
     private String title;
     private int classroomNumber;
     private Course course;
+    private Instructor instructor;
     private List<Student> students;
 
 
     public Lesson(){
     }
 
-    public Lesson(String title, int classroomNumber, Course course){
+    public Lesson(String title, int classroomNumber, Course course, Instructor instructor){
         this.title = title;
         this.classroomNumber = classroomNumber;
         this.course = course;
-        this.students = students;
+        this.instructor = instructor;
+        this.students = new ArrayList<>();
     }
 
     @Id
@@ -81,5 +84,19 @@ public class Lesson {
 
     public void setStudents(List<Student> students) {
         this.students = students;
+    }
+
+    public void addStudentToLesson(Student student){
+        this.students.add(student);
+    }
+
+    @ManyToOne
+    @JoinColumn(name="instructor_id", nullable=false)
+    public Instructor getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(Instructor instructor) {
+        this.instructor = instructor;
     }
 }
